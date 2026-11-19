@@ -1,0 +1,279 @@
+{
+  "generated_at": "2026-11-19 12:48:36",
+  "corpus": {
+    "chunks": 35,
+    "documents": 6
+  },
+  "n_queries": 48,
+  "n_negatives": 12,
+  "models": {
+    "embedder": "local:BAAI/bge-m3",
+    "reranker": "local:BAAI/bge-reranker-v2-m3"
+  },
+  "settings": {
+    "dense_candidates": 20,
+    "bm25_candidates": 20,
+    "rrf_k": 60,
+    "fused_candidates": 25
+  },
+  "summary": {
+    "bm25": {
+      "label": "BM25 only",
+      "recall_at_5": 0.875,
+      "mrr_at_10": 0.7919,
+      "ndcg_at_10": 0.8126,
+      "hit_at_1": 0.7292,
+      "latency_p50_ms": 0.4,
+      "latency_p95_ms": 0.5
+    },
+    "dense": {
+      "label": "BGE-M3 dense only",
+      "recall_at_5": 1.0,
+      "mrr_at_10": 0.9253,
+      "ndcg_at_10": 0.9386,
+      "hit_at_1": 0.875,
+      "latency_p50_ms": 21.8,
+      "latency_p95_ms": 24.9
+    },
+    "hybrid": {
+      "label": "Dense + BM25 (RRF)",
+      "recall_at_5": 0.9792,
+      "mrr_at_10": 0.896,
+      "ndcg_at_10": 0.9179,
+      "hit_at_1": 0.8333,
+      "latency_p50_ms": 21.6,
+      "latency_p95_ms": 22.4
+    },
+    "hybrid_rerank": {
+      "label": "RRF + BGE reranker v2 m3",
+      "recall_at_5": 1.0,
+      "mrr_at_10": 0.9288,
+      "ndcg_at_10": 0.9474,
+      "hit_at_1": 0.875,
+      "latency_p50_ms": 681.5,
+      "latency_p95_ms": 748.6
+    }
+  },
+  "mrr_by_query_type": {
+    "acronym": {
+      "bm25": 0.5,
+      "dense": 0.5,
+      "hybrid": 0.5,
+      "hybrid_rerank": 0.5
+    },
+    "assignment": {
+      "bm25": 0.84,
+      "dense": 0.867,
+      "hybrid": 0.867,
+      "hybrid_rerank": 0.9
+    },
+    "identifier": {
+      "bm25": 0.667,
+      "dense": 1.0,
+      "hybrid": 0.75,
+      "hybrid_rerank": 1.0
+    },
+    "keyword": {
+      "bm25": 1.0,
+      "dense": 1.0,
+      "hybrid": 1.0,
+      "hybrid_rerank": 1.0
+    },
+    "multilingual": {
+      "bm25": 0.0,
+      "dense": 1.0,
+      "hybrid": 1.0,
+      "hybrid_rerank": 1.0
+    },
+    "paraphrase": {
+      "bm25": 1.0,
+      "dense": 1.0,
+      "hybrid": 1.0,
+      "hybrid_rerank": 1.0
+    },
+    "semantic": {
+      "bm25": 0.695,
+      "dense": 0.895,
+      "hybrid": 0.855,
+      "hybrid_rerank": 0.895
+    }
+  },
+  "query_type_counts": {
+    "acronym": 1,
+    "assignment": 5,
+    "identifier": 2,
+    "keyword": 4,
+    "multilingual": 1,
+    "paraphrase": 12,
+    "semantic": 23
+  },
+  "reranker_effect": {
+    "improved": 6,
+    "worsened": 2,
+    "unchanged": 40
+  },
+  "stage_latency_ms": {
+    "dense_ms": {
+      "p50": 21.4,
+      "p95": 22.0
+    },
+    "bm25_ms": {
+      "p50": 0.3,
+      "p95": 0.4
+    },
+    "first_stage_ms": {
+      "p50": 21.5,
+      "p95": 22.1
+    },
+    "rrf_ms": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "retrieval_total_ms": {
+      "p50": 681.4,
+      "p95": 748.5
+    },
+    "rerank_ms": {
+      "p50": 660.0,
+      "p95": 729.2
+    }
+  },
+  "calibration": {
+    "positive_top_scores": {
+      "min": 9e-05,
+      "p10": 0.00287,
+      "median": 0.47529
+    },
+    "negative_top_scores": {
+      "max": 0.001237,
+      "median": 9.6e-05
+    },
+    "sweep": [
+      {
+        "threshold": 0.0005,
+        "answerable_pass_rate": 0.958,
+        "negative_reject_rate": 0.833,
+        "balanced_accuracy": 0.896
+      },
+      {
+        "threshold": 0.001,
+        "answerable_pass_rate": 0.917,
+        "negative_reject_rate": 0.917,
+        "balanced_accuracy": 0.917
+      },
+      {
+        "threshold": 0.002,
+        "answerable_pass_rate": 0.917,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.958
+      },
+      {
+        "threshold": 0.005,
+        "answerable_pass_rate": 0.854,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.927
+      },
+      {
+        "threshold": 0.01,
+        "answerable_pass_rate": 0.812,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.906
+      },
+      {
+        "threshold": 0.02,
+        "answerable_pass_rate": 0.812,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.906
+      },
+      {
+        "threshold": 0.05,
+        "answerable_pass_rate": 0.771,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.885
+      },
+      {
+        "threshold": 0.1,
+        "answerable_pass_rate": 0.75,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.875
+      },
+      {
+        "threshold": 0.2,
+        "answerable_pass_rate": 0.646,
+        "negative_reject_rate": 1.0,
+        "balanced_accuracy": 0.823
+      }
+    ],
+    "chosen_threshold": 0.002,
+    "hard_negatives": [
+      {
+        "query": "What is the maternity leave policy?",
+        "top_score": 0.00389,
+        "gate_passes": true
+      },
+      {
+        "query": "Can I get reimbursed for a gym membership?",
+        "top_score": 0.00076,
+        "gate_passes": false
+      },
+      {
+        "query": "What is the dress code?",
+        "top_score": 0.00032,
+        "gate_passes": false
+      },
+      {
+        "query": "How many days of bereavement leave do I get?",
+        "top_score": 0.01868,
+        "gate_passes": true
+      }
+    ],
+    "configured_gate": {
+      "answer_threshold": 0.002,
+      "answerable_pass_rate": 0.958,
+      "primary_in_evidence_rate": 0.938,
+      "negative_reject_rate": 1.0,
+      "answerable_rejected": [
+        "q12",
+        "q37"
+      ]
+    }
+  },
+  "failures": [
+    {
+      "id": "q08",
+      "query": "I submitted leave for next Monday. Is it approved?",
+      "primary_rank": 2,
+      "top1": "HR-POL-001-003"
+    },
+    {
+      "id": "q17",
+      "query": "Can I buy a monitor and get reimbursed?",
+      "primary_rank": 4,
+      "top1": "HR-POL-003-006"
+    },
+    {
+      "id": "q31",
+      "query": "I forgot my password and I'm locked out",
+      "primary_rank": 2,
+      "top1": "IT-GUIDE-005-001"
+    },
+    {
+      "id": "q36",
+      "query": "Can I share my OTP with a colleague?",
+      "primary_rank": 3,
+      "top1": "HR-GUIDE-002-006"
+    },
+    {
+      "id": "q37",
+      "query": "Is it okay to turn off antivirus to speed up my PC?",
+      "primary_rank": 2,
+      "top1": "IT-GUIDE-005-005"
+    },
+    {
+      "id": "q43",
+      "query": "MFA",
+      "primary_rank": 2,
+      "top1": "IT-POL-004-007"
+    }
+  ]
+}

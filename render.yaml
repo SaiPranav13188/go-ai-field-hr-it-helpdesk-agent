@@ -1,0 +1,54 @@
+# Render Blueprint — backend API (FastAPI + LangGraph + MCP child process).
+# Retrieval models run through the Hugging Face Inference API (MODEL_BACKEND=hf_api) because a
+# small Render instance cannot hold BGE-M3 + the reranker (~4.5 GB) in memory.
+services:
+  - type: web
+    name: go-ai-field-helpdesk-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install --upgrade uv && uv sync --frozen --no-dev
+    startCommand: .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips="*"
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: MODEL_BACKEND
+        value: hf_api
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: MCP_IDENTITY_SECRET
+        generateValue: true
+      - key: FRONTEND_ORIGINS
+        sync: false            # e.g. https://go-ai-field-helpdesk.vercel.app
+      - key: GENERATION_MODEL
+        value: gemini-3.5-flash-lite
+      - key: CLASSIFIER_MODEL
+        value: gemini-3.1-flash-lite
+      - key: GENERATION_FALLBACK_MODEL
+        value: gemini-3.1-flash-lite
+      - key: GENERATION_API_KEY
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false            # Supabase session pooler host
+      - key: POSTGRES_PORT
+        value: "5432"
+      - key: POSTGRES_DB
+        value: postgres
+      - key: POSTGRES_USER
+        sync: false            # helpdesk_readonly.<project-ref>
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_SSLMODE
+        value: require

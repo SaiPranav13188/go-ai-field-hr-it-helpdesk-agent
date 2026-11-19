@@ -1,0 +1,229 @@
+{
+  "report": {
+    "documents": 6,
+    "chunks": 35,
+    "embedded": 35,
+    "reused": 0,
+    "deleted": 0,
+    "avgdl": 36.97,
+    "seconds": 0.05,
+    "token_min": 10,
+    "token_max": 94,
+    "token_mean": 34.7
+  },
+  "embedding_model": "BAAI/bge-m3",
+  "embedder": "test:hash",
+  "collection": "hr_it_policies",
+  "chunks": [
+    {
+      "chunk_id": "HR-GUIDE-002-001",
+      "section": "3.7 Working hours",
+      "tokens": 27,
+      "hash": "b847feeeea5dd905"
+    },
+    {
+      "chunk_id": "HR-GUIDE-002-002",
+      "section": "3.8 Attendance",
+      "tokens": 24,
+      "hash": "51a3fe3bc0fd28fb"
+    },
+    {
+      "chunk_id": "HR-GUIDE-002-003",
+      "section": "3.9 Remote and hybrid work",
+      "tokens": 27,
+      "hash": "e596e3516743d635"
+    },
+    {
+      "chunk_id": "HR-GUIDE-002-004",
+      "section": "3.10 Public holidays",
+      "tokens": 36,
+      "hash": "357abaf7c7f13d81"
+    },
+    {
+      "chunk_id": "HR-GUIDE-002-005",
+      "section": "3.11 Workplace conduct",
+      "tokens": 17,
+      "hash": "31085809d4ba19a7"
+    },
+    {
+      "chunk_id": "HR-GUIDE-002-006",
+      "section": "3.12 Employment information",
+      "tokens": 35,
+      "hash": "c0d28c049c1032d0"
+    },
+    {
+      "chunk_id": "HR-POL-001-001",
+      "section": "3.1 Purpose",
+      "tokens": 17,
+      "hash": "37fb725128a42c39"
+    },
+    {
+      "chunk_id": "HR-POL-001-002",
+      "section": "3.2 Annual leave entitlements",
+      "tokens": 94,
+      "hash": "a7569853392e1522"
+    },
+    {
+      "chunk_id": "HR-POL-001-003",
+      "section": "3.3 Requesting leave",
+      "tokens": 70,
+      "hash": "b5293cc7f4d32144"
+    },
+    {
+      "chunk_id": "HR-POL-001-004",
+      "section": "3.4 Approval and changes",
+      "tokens": 23,
+      "hash": "80f36910d80d2639"
+    },
+    {
+      "chunk_id": "HR-POL-001-005",
+      "section": "3.5 Half-day leave",
+      "tokens": 24,
+      "hash": "6e328978c0466638"
+    },
+    {
+      "chunk_id": "HR-POL-001-006",
+      "section": "3.6 Agent response rules",
+      "tokens": 50,
+      "hash": "0d5a134c820b3b9a"
+    },
+    {
+      "chunk_id": "HR-POL-003-001",
+      "section": "3.13 Purpose",
+      "tokens": 10,
+      "hash": "b67bddca5bab0d93"
+    },
+    {
+      "chunk_id": "HR-POL-003-002",
+      "section": "3.14 Eligible expenses",
+      "tokens": 53,
+      "hash": "29016403e15f81c6"
+    },
+    {
+      "chunk_id": "HR-POL-003-003",
+      "section": "3.15 Sample limits",
+      "tokens": 64,
+      "hash": "161248e00f59ada8"
+    },
+    {
+      "chunk_id": "HR-POL-003-004",
+      "section": "3.16 Submission process",
+      "tokens": 35,
+      "hash": "a969c1d147412145"
+    },
+    {
+      "chunk_id": "HR-POL-003-005",
+      "section": "3.17 Review and payment",
+      "tokens": 24,
+      "hash": "69e3051d91f29aec"
+    },
+    {
+      "chunk_id": "HR-POL-003-006",
+      "section": "3.18 Exclusions",
+      "tokens": 14,
+      "hash": "17eb5a1a28e1346f"
+    },
+    {
+      "chunk_id": "HR-POL-003-007",
+      "section": "3.19 Agent response rules",
+      "tokens": 19,
+      "hash": "bb826e531269a093"
+    },
+    {
+      "chunk_id": "HR-POL-006-001",
+      "section": "3.33 Health insurance",
+      "tokens": 55,
+      "hash": "5e96478c049f7b32"
+    },
+    {
+      "chunk_id": "HR-POL-006-002",
+      "section": "3.34 Benefits enrolment",
+      "tokens": 35,
+      "hash": "7d4f4625b21c0716"
+    },
+    {
+      "chunk_id": "HR-POL-006-003",
+      "section": "3.35 Benefits changes",
+      "tokens": 31,
+      "hash": "c52e374ac8f81982"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-001",
+      "section": "3.27 Wi-Fi or network connection",
+      "tokens": 58,
+      "hash": "eb435ea8237ded80"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-002",
+      "section": "3.28 VPN connection failure",
+      "tokens": 53,
+      "hash": "c9896c5d5b4759dd"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-003",
+      "section": "3.29 Password or account access issue",
+      "tokens": 27,
+      "hash": "b4b69be215ced12f"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-004",
+      "section": "3.30 Software installation",
+      "tokens": 19,
+      "hash": "d84c252e22852521"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-005",
+      "section": "3.31 Device performance",
+      "tokens": 30,
+      "hash": "91ac0ecc3712261f"
+    },
+    {
+      "chunk_id": "IT-GUIDE-005-006",
+      "section": "3.32 Escalation",
+      "tokens": 35,
+      "hash": "5ce645d10e1d10a4"
+    },
+    {
+      "chunk_id": "IT-POL-004-001",
+      "section": "3.20 Account security",
+      "tokens": 35,
+      "hash": "501fdf04da0ccde4"
+    },
+    {
+      "chunk_id": "IT-POL-004-002",
+      "section": "3.21 Device security",
+      "tokens": 36,
+      "hash": "fde17f02b94ed5bf"
+    },
+    {
+      "chunk_id": "IT-POL-004-003",
+      "section": "3.22 Data handling",
+      "tokens": 37,
+      "hash": "ce9334812de52417"
+    },
+    {
+      "chunk_id": "IT-POL-004-004",
+      "section": "3.23 Phishing and suspicious messages",
+      "tokens": 18,
+      "hash": "3934e57dc20cdafd"
+    },
+    {
+      "chunk_id": "IT-POL-004-005",
+      "section": "3.24 Remote access",
+      "tokens": 18,
+      "hash": "e6630468dc84a767"
+    },
+    {
+      "chunk_id": "IT-POL-004-006",
+      "section": "3.25 Security incidents",
+      "tokens": 26,
+      "hash": "124aeb0795706495"
+    },
+    {
+      "chunk_id": "IT-POL-004-007",
+      "section": "3.26 Agent security rules",
+      "tokens": 37,
+      "hash": "aa90959d1935a089"
+    }
+  ]
+}

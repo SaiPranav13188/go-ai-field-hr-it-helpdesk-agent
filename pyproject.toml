@@ -1,0 +1,45 @@
+[project]
+name = "go-ai-field-hr-it-helpdesk-agent"
+version = "1.0.0"
+description = "Secure HR & IT helpdesk agent: hybrid RAG (BGE-M3 + BM25 + RRF + BGE reranker), Qdrant, MCP-gated PostgreSQL, LangGraph guardrails."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.165.0",
+    "google-genai>=3.6.1",
+    "httpx>=0.28.1",
+    "huggingface-hub>=2.4.0",
+    "langgraph>=1.2.23",
+    "mcp>=2.3.0",
+    "numpy>=2.5.5",
+    "psycopg-pool>=3.3.3",
+    "psycopg[binary]>=3.3.9",
+    "pydantic-settings>=2.16.3",
+    "python-dotenv>=1.2.4",
+    "qdrant-client>=1.20.0",
+    "rank-bm25>=0.2.2",
+    "snowballstemmer>=3.1.1",
+    "sse-starlette>=3.7.0",
+    "tokenizers>=0.23.3",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.optional-dependencies]
+local = [
+    "sentence-transformers>=6.3.0",
+    "torch>=2.15.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["."]
+asyncio_default_fixture_loop_scope = "function"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+]
