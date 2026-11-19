@@ -1,6 +1,6 @@
 # Render Blueprint — backend API (FastAPI + LangGraph + MCP child process).
-# Retrieval models run through the Hugging Face Inference API (MODEL_BACKEND=hf_api) because a
-# small Render instance cannot hold BGE-M3 + the reranker (~4.5 GB) in memory.
+# BGE-M3 + bge-reranker-v2-m3 (~4.5 GB) don't fit in a small Render instance, so they run in our own
+# model service (model_service/, deployed on Modal) and the API calls it (MODEL_BACKEND=remote).
 services:
   - type: web
     name: go-ai-field-helpdesk-api
@@ -19,7 +19,11 @@ services:
       - key: LOG_LEVEL
         value: INFO
       - key: MODEL_BACKEND
-        value: hf_api
+        value: remote
+      - key: MODEL_SERVICE_URL
+        sync: false            # https://<workspace>--go-ai-field-bge-service-web.<region>.modal.run
+      - key: MODEL_SERVICE_KEY
+        sync: false
       - key: SESSION_SECRET
         generateValue: true
       - key: MCP_IDENTITY_SECRET
@@ -33,8 +37,6 @@ services:
       - key: GENERATION_FALLBACK_MODEL
         value: gemini-3.1-flash-lite
       - key: GENERATION_API_KEY
-        sync: false
-      - key: HF_TOKEN
         sync: false
       - key: QDRANT_URL
         sync: false

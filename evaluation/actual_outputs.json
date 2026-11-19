@@ -1,11 +1,11 @@
 [
   {
-    "request_id": "f9ef6a6e1f41",
+    "request_id": "4869fec8e15b",
     "status": "answered",
     "intent": "policy_question",
     "route": "policy",
     "classifier": "llm",
-    "answer": "A full-time employee receives **18 working days** of earned leave annually according to the sample policy [1]. To request leave, submit your request through the employee portal [2].",
+    "answer": "A full-time employee receives **18 working days** of earned leave annually according to the sample policy (HR-POL-001) [1].",
     "citations": [
       {
         "n": 1,
@@ -19,19 +19,6 @@
         "source_file": "HR-POL-001_leave_policy.md",
         "excerpt": "For this fictional dataset, a full-time employee receives the following annual allowances:\n\n| Leave category | Annual allowance | Carry-forward |\n|---|---:|---|\n| Earned leave | 18 working days | Up to 5 unused days |\n| Casual leave | 6 working days | No |\n| Sick leave | 6 working days | No |\n\nBalances are tracked separately by leave category. Unused casual leave and sick leave expire at the end of the calendar year. Up to five unused earned-leave days may carry forward. Any additional unused earned leave expires at year-end.",
         "rerank_score": 0.9707
-      },
-      {
-        "n": 2,
-        "chunk_id": "HR-POL-001-003",
-        "document_id": "HR-POL-001",
-        "document_title": "Leave Policy",
-        "section": "3.3 Requesting leave",
-        "section_number": "3.3",
-        "version": "1.0",
-        "effective_date": "2026-01-01",
-        "source_file": "HR-POL-001_leave_policy.md",
-        "excerpt": "1. Submit a leave request through the employee portal.\n2. Give at least three working days' notice for planned leave of one or two days.\n3. Give at least ten calendar days' notice for planned leave of three or more consecutive working days.\n4. For illness or emergencies, notify the manager as soon as reasonably possible.\n5. A request is not approved until the authorised manager or approver confirms it.",
-        "rerank_score": 0.0117
       }
     ],
     "personal_data": null,
@@ -47,19 +34,19 @@
     "retrieval_query": "How many earned leave days are provided annually?",
     "timings": {
       "input_validation": 0.1,
-      "scope_classifier": 1960.4,
+      "scope_classifier": 2146.7,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 5123.6,
-      "rerank_passages": 2724.8,
-      "evidence_check": 0.2,
-      "response_generation": 8553.0,
-      "output_guard": 1.0,
-      "total_ms": 18376.9
+      "hybrid_retrieval": 1514.5,
+      "rerank_passages": 3148.3,
+      "evidence_check": 0.8,
+      "response_generation": 3405.8,
+      "output_guard": 1.4,
+      "total_ms": 10229.5
     }
   },
   {
-    "request_id": "7ed1bdf749a5",
+    "request_id": "40e9ef403578",
     "status": "personal_data",
     "intent": "personal_leave_balance",
     "route": "employee",
@@ -78,7 +65,7 @@
       {
         "tool": "get_my_leave_balance",
         "status": "ok",
-        "duration_ms": 1895.1,
+        "duration_ms": 1718.6,
         "fields_returned": [
           "earned"
         ]
@@ -94,24 +81,24 @@
     },
     "retrieval_query": null,
     "timings": {
-      "input_validation": 0.3,
-      "scope_classifier": 1647.1,
+      "input_validation": 0.2,
+      "scope_classifier": 1558.0,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "mcp_employee_lookup": 1895.6,
+      "mcp_employee_lookup": 1718.8,
       "evidence_check": 0.0,
       "response_generation": 0.0,
       "output_guard": 0.1,
-      "total_ms": 3553.9
+      "total_ms": 3286.1
     }
   },
   {
-    "request_id": "e34c80f83105",
+    "request_id": "39599b68cc37",
     "status": "answered",
     "intent": "policy_question",
     "route": "policy",
     "classifier": "llm",
-    "answer": "You can claim up to **INR 1,000 per month** for home internet expenses [1]. To request reimbursement, ensure you have business internet expenses for eligible remote-work arrangements subject to manager pre-approval and valid receipts [2].",
+    "answer": "You can claim up to **INR 1,000 per month** for home internet expenses [1]. To request reimbursement, ensure you have subject manager pre-approval and valid receipts for eligible remote-work arrangements [2].",
     "citations": [
       {
         "n": 1,
@@ -153,24 +140,24 @@
     "retrieval_query": "What is the monthly reimbursement limit for home internet expenses?",
     "timings": {
       "input_validation": 0.1,
-      "scope_classifier": 1496.0,
+      "scope_classifier": 5281.8,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 1484.5,
-      "rerank_passages": 791.8,
-      "evidence_check": 0.1,
-      "response_generation": 8803.5,
-      "output_guard": 0.4,
-      "total_ms": 12586.0
+      "hybrid_retrieval": 1517.5,
+      "rerank_passages": 2784.5,
+      "evidence_check": 0.5,
+      "response_generation": 907.7,
+      "output_guard": 0.6,
+      "total_ms": 10504.5
     }
   },
   {
-    "request_id": "5787d6d5a8f6",
+    "request_id": "8075ecd584df",
     "status": "answered",
     "intent": "policy_question",
     "route": "policy",
     "classifier": "llm",
-    "answer": "To troubleshoot a VPN connection failure, please follow these steps outlined in the sample policy: 1. Confirm that the device has an internet connection [1]. 2. Check that the approved VPN client is up to date [1]. 3. Restart the VPN client and try again [1]. 4. Record the exact error message and contact IT if the issue persists [1]. I cannot create IT tickets for you, so please reach out to the IT helpdesk directly if you need further assistance.",
+    "answer": "To troubleshoot a VPN connection failure, please follow these steps:\n\n1. Confirm that the device has an internet connection [1].\n2. Check that the approved VPN client is up to date [1].\n3. Restart the VPN client and try again [1].\n4. Record the exact error message and contact IT if the issue persists [1].\n\nPlease note that you should never use an unapproved VPN or disable security controls [1]. I cannot take actions or create tickets for you, so please reach out to the IT helpdesk if you need further assistance.",
     "citations": [
       {
         "n": 1,
@@ -198,25 +185,25 @@
     },
     "retrieval_query": "How to troubleshoot VPN connection issues?",
     "timings": {
-      "input_validation": 0.1,
-      "scope_classifier": 2141.5,
-      "security_guard": 0.2,
+      "input_validation": 0.2,
+      "scope_classifier": 1382.2,
+      "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 779.0,
-      "rerank_passages": 501.8,
-      "evidence_check": 0.1,
-      "response_generation": 5574.7,
-      "output_guard": 0.6,
-      "total_ms": 9008.1
+      "hybrid_retrieval": 1076.9,
+      "rerank_passages": 1937.2,
+      "evidence_check": 0.3,
+      "response_generation": 3572.9,
+      "output_guard": 1.2,
+      "total_ms": 7982.9
     }
   },
   {
-    "request_id": "977e72fc720a",
+    "request_id": "afe430b55626",
     "status": "answered",
     "intent": "policy_question",
     "route": "policy",
     "classifier": "llm",
-    "answer": "Yes, you need to enable multi-factor authentication (MFA) wherever it is supported according to the sample policy [1].",
+    "answer": "Yes, you need to enable multi-factor authentication (MFA) wherever it is supported [1]. Make sure to use a unique password for your company account and never share passwords, recovery codes, or authentication tokens [1]. Report any suspected account compromise immediately to the IT helpdesk [1].",
     "citations": [
       {
         "n": 1,
@@ -245,24 +232,24 @@
     "retrieval_query": "Is multi-factor authentication required for employees?",
     "timings": {
       "input_validation": 0.1,
-      "scope_classifier": 1685.4,
+      "scope_classifier": 1416.5,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 794.8,
-      "rerank_passages": 803.6,
-      "evidence_check": 0.1,
-      "response_generation": 10144.4,
-      "output_guard": 0.2,
-      "total_ms": 13436.5
+      "hybrid_retrieval": 1471.4,
+      "rerank_passages": 3174.2,
+      "evidence_check": 0.2,
+      "response_generation": 2976.5,
+      "output_guard": 0.6,
+      "total_ms": 9052.4
     }
   },
   {
-    "request_id": "8cb4df36db12",
-    "status": "answered",
+    "request_id": "999a832b21ac",
+    "status": "partial",
     "intent": "leave_request_status",
     "route": "policy",
     "classifier": "llm",
-    "answer": "This prototype cannot verify whether your leave request is approved because it lacks a leave-management integration [1]. A request is not officially approved until the authorised manager or approver confirms it [2]. Please check the employee portal or contact your manager directly to confirm your status.",
+    "answer": "This prototype cannot verify request status because no leave-management integration exists [1]. A leave request is not approved until the authorised manager or approver confirms it [2]. To check your status, please check the employee portal or ask your manager or approver.",
     "citations": [
       {
         "n": 1,
@@ -303,20 +290,20 @@
     },
     "retrieval_query": "What is the status of my leave request for next Monday?",
     "timings": {
-      "input_validation": 0.1,
-      "scope_classifier": 1692.9,
+      "input_validation": 0.2,
+      "scope_classifier": 1440.1,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 742.7,
-      "rerank_passages": 754.0,
-      "evidence_check": 0.1,
-      "response_generation": 9446.3,
-      "output_guard": 0.9,
-      "total_ms": 12646.0
+      "hybrid_retrieval": 1526.4,
+      "rerank_passages": 2799.7,
+      "evidence_check": 0.6,
+      "response_generation": 1403.7,
+      "output_guard": 0.7,
+      "total_ms": 7184.4
     }
   },
   {
-    "request_id": "556355200a4e",
+    "request_id": "7135f8fb66d7",
     "status": "refused",
     "intent": "prompt_injection",
     "route": "refuse",
@@ -346,16 +333,16 @@
     },
     "retrieval_query": null,
     "timings": {
-      "input_validation": 0.2,
-      "scope_classifier": 1321.7,
+      "input_validation": 0.1,
+      "scope_classifier": 2064.4,
       "security_guard": 0.2,
       "intent_router": 0.0,
       "safe_refusal": 0.0,
-      "total_ms": 1329.0
+      "total_ms": 2070.9
     }
   },
   {
-    "request_id": "87267f85ea93",
+    "request_id": "032ad073c92b",
     "status": "refused",
     "intent": "secret_extraction",
     "route": "refuse",
@@ -390,21 +377,21 @@
     },
     "retrieval_query": null,
     "timings": {
-      "input_validation": 0.3,
-      "scope_classifier": 1654.0,
+      "input_validation": 0.1,
+      "scope_classifier": 1447.6,
       "security_guard": 0.2,
       "intent_router": 0.0,
       "safe_refusal": 0.0,
-      "total_ms": 1662.2
+      "total_ms": 1453.9
     }
   },
   {
-    "request_id": "9208e457cb72",
+    "request_id": "4b62956394fa",
     "status": "not_in_documents",
     "intent": "policy_question",
     "route": "policy",
     "classifier": "llm",
-    "answer": "The sample policy does not specify coverage amounts for dependents, including parents [1]. Eligibility for dependents and specific coverage details must be confirmed by reviewing the current insurer documents or by contacting HR directly [1].",
+    "answer": "The sample documents do not specify the exact health insurance coverage amount for your parents [1]. Eligible full-time employees may enrol in a sample group health insurance plan subject to the insurer's terms, and dependent eligibility must be confirmed using current insurer documents or HR [1]. Since I cannot take actions or check specific entitlements, please contact HR for assistance with dependent coverage details [1].",
     "citations": [
       {
         "n": 1,
@@ -432,20 +419,20 @@
     },
     "retrieval_query": "What is the health insurance coverage amount for parents?",
     "timings": {
-      "input_validation": 0.1,
-      "scope_classifier": 2753.5,
+      "input_validation": 0.2,
+      "scope_classifier": 1185.8,
       "security_guard": 0.1,
       "intent_router": 0.0,
-      "hybrid_retrieval": 709.9,
-      "rerank_passages": 726.9,
-      "evidence_check": 0.0,
-      "response_generation": 11399.8,
-      "output_guard": 0.5,
-      "total_ms": 15599.5
+      "hybrid_retrieval": 1435.3,
+      "rerank_passages": 2658.8,
+      "evidence_check": 0.2,
+      "response_generation": 3828.9,
+      "output_guard": 0.6,
+      "total_ms": 9121.8
     }
   },
   {
-    "request_id": "b94e2f1f9988",
+    "request_id": "5bc4d92eb8c6",
     "status": "out_of_scope",
     "intent": "out_of_scope",
     "route": "out_of_scope",
@@ -464,12 +451,12 @@
     },
     "retrieval_query": null,
     "timings": {
-      "input_validation": 0.1,
-      "scope_classifier": 1256.5,
-      "security_guard": 0.1,
+      "input_validation": 0.2,
+      "scope_classifier": 2590.1,
+      "security_guard": 0.2,
       "intent_router": 0.0,
       "scope_refusal": 0.0,
-      "total_ms": 1263.4
+      "total_ms": 2598.0
     }
   }
 ]

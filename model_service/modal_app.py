@@ -30,10 +30,10 @@ app = modal.App("go-ai-field-bge-service")
 
 @app.function(
     image=image,
-    cpu=4.0,
-    memory=8192,
+    cpu=2.0,
+    memory=6144,
     secrets=[modal.Secret.from_name("bge-service-key")],
-    scaledown_window=300,  # stay warm 5 min after the last request, then scale to zero (no cost)
+    scaledown_window=120,  # stay warm 2 min after the last request, then scale to zero (no cost)
     timeout=120,
 )
 @modal.concurrent(max_inputs=8)
