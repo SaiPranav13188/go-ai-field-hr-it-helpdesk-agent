@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { BackgroundVideo, EASE, LineReveal, Reveal, cn } from "@/components/fx/primitives";
 import Logo from "@/components/Logo";
 import { api } from "@/lib/api";
+import { Lens, SmoothScroll } from "@/components/fx/effects";
 
 type Row = { label: string; recall_at_5: number; mrr_at_10: number; ndcg_at_10: number; hit_at_1: number; latency_p50_ms: number; latency_p95_ms: number };
 type EvalData = {
@@ -86,9 +87,11 @@ export default function ArchitecturePage() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <SmoothScroll />
       <div className="min-h-screen bg-ink">
         <section className="relative h-[62svh] min-h-[440px] overflow-hidden border-b border-rule">
-          <BackgroundVideo scale={1.2} overlayClassName="bg-[linear-gradient(180deg,rgba(10,10,11,0.75)_0%,rgba(10,10,11,0.35)_40%,#0a0a0b_100%)]" />
+          <BackgroundVideo scale={1.2} overlayClassName="bg-[linear-gradient(180deg,rgba(10,10,11,0.7)_0%,rgba(10,10,11,0.15)_40%,#0a0a0b_100%)]" />
+          <Lens radius={360} dim={0.5} />
           <div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col px-5 sm:px-8">
             <div className="flex items-center justify-between py-5">
               <Link href="/" className="flex items-center gap-2 text-[13.5px] text-paper-2 transition hover:text-paper">

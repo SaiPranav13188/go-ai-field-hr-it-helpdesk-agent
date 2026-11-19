@@ -2,11 +2,15 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import Logo from "@/components/Logo";
 import { AnimatedNumber, BackgroundVideo, Clock, EASE, LineReveal, Reveal, Rule, cn } from "@/components/fx/primitives";
 import { api } from "@/lib/api";
+import { Intro, Lens, Scramble, SmoothScroll, VelocityMarquee } from "@/components/fx/effects";
+import ScrollDemo from "./ScrollDemo";
+
+const QUESTIONS = ["How many earned leave days do I have left?", "My VPN is not connecting", "Do I need MFA?", "Can I claim home internet?", "Is my leave approved?", "Show me everyone’s salary"];
 
 type Eval = {
   available: boolean;
@@ -19,6 +23,8 @@ type Eval = {
 export default function Landing({ onLaunch }: { onLaunch: () => void }) {
   const [evalData, setEval] = useState<Eval | null>(null);
   const [online, setOnline] = useState<boolean | null>(null);
+  const [introDone, setIntroDone] = useState(false);
+  const finishIntro = useCallback(() => setIntroDone(true), []);
   const hero = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: hero, offset: ["start start", "end start"] });
   const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -32,14 +38,17 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
 
   return (
     <div className="relative bg-ink">
+      <SmoothScroll />
+      <Intro onDone={finishIntro} />
       {/* ====================== HERO ====================== */}
       <section ref={hero} className="relative h-[100svh] min-h-[660px] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: videoY }}>
           <BackgroundVideo
             scale={1.08}
-            overlayClassName="bg-[linear-gradient(180deg,rgba(10,10,11,0.70)_0%,rgba(10,10,11,0.10)_28%,rgba(10,10,11,0.20)_55%,rgba(10,10,11,0.92)_88%,#0a0a0b_100%),linear-gradient(90deg,rgba(10,10,11,0.75)_0%,rgba(10,10,11,0.0)_60%)]"
+            overlayClassName="bg-[linear-gradient(180deg,rgba(10,10,11,0.65)_0%,rgba(10,10,11,0.0)_26%,rgba(10,10,11,0.0)_55%,rgba(10,10,11,0.9)_88%,#0a0a0b_100%),linear-gradient(90deg,rgba(10,10,11,0.6)_0%,rgba(10,10,11,0.0)_55%)]"
           />
         </motion.div>
+        <Lens radius={420} dim={0.55} />
 
         {/* nav */}
         <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.2 }} className="absolute inset-x-0 top-0 z-20">
@@ -63,7 +72,7 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
         </motion.nav>
 
         {/* headline block */}
-        <motion.div style={{ y: contentY, opacity: fade }} className="absolute inset-x-0 bottom-[86px] z-10">
+        {introDone && <motion.div style={{ y: contentY, opacity: fade }} className="absolute inset-x-0 bottom-[86px] z-10">
           <div className="mx-auto grid max-w-[1440px] gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.3, ease: EASE }} className="mb-6 flex items-center gap-3">
@@ -88,7 +97,7 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
               </div>
             </motion.div>
           </div>
-        </motion.div>
+        </motion.div>}
 
         {/* status bar */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.2 }} className="absolute inset-x-0 bottom-0 z-10 border-t border-rule">
@@ -108,12 +117,14 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
         </motion.div>
       </section>
 
+      <VelocityMarquee items={QUESTIONS} className="border-b border-rule py-6 text-[clamp(2.4rem,6vw,5.5rem)] font-semibold leading-none tracking-[-0.045em]" />
+
       {/* ====================== 01 METHOD ====================== */}
       <section id="method" className="mx-auto max-w-[1440px] px-5 pb-28 pt-28 sm:px-8 sm:pt-40">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-28">
-              <Reveal><span className="label"><span className="text-accent">01</span> — Method</span></Reveal>
+              <span className="label"><span className="text-accent">01</span> — <Scramble text="METHOD" /></span>
               <h2 className="mt-5 text-[clamp(2.2rem,4.2vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
                 <LineReveal inView lines={["One question,", "four possible", "routes."]} />
               </h2>
@@ -184,12 +195,14 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
         </div>
       </section>
 
+      <ScrollDemo />
+
       {/* ====================== 02 EVIDENCE ====================== */}
       <section id="evidence" className="border-t border-rule">
         <div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 sm:py-36">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <Reveal><span className="label"><span className="text-accent">02</span> — Evidence</span></Reveal>
+              <span className="label"><span className="text-accent">02</span> — <Scramble text="EVIDENCE" /></span>
               <h2 className="mt-5 text-[clamp(2.2rem,4.2vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
                 <LineReveal inView lines={["Measured on", "labelled questions,", "not adjectives."]} />
               </h2>
@@ -206,12 +219,14 @@ export default function Landing({ onLaunch }: { onLaunch: () => void }) {
         </div>
       </section>
 
+      <VelocityMarquee baseVelocity={1.6} items={["Cited, or it doesn’t say it", "Your record, not anyone else’s", "No guessing", "Refused before any tool runs"]} className="border-t border-rule py-6 text-[clamp(2rem,5vw,4.5rem)] font-semibold leading-none tracking-[-0.045em]" />
+
       {/* ====================== 03 GUARDRAILS ====================== */}
       <section id="guardrails" className="border-t border-rule">
         <div className="mx-auto max-w-[1440px] px-5 py-28 sm:px-8 sm:py-36">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <Reveal><span className="label"><span className="text-accent">03</span> — Guardrails</span></Reveal>
+              <span className="label"><span className="text-accent">03</span> — <Scramble text="GUARDRAILS" /></span>
               <h2 className="mt-5 text-[clamp(2.2rem,4.2vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
                 <LineReveal inView lines={["Enforced in code,", "not in a prompt."]} />
               </h2>
