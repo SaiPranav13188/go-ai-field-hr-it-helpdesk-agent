@@ -14,6 +14,7 @@ import CommandPalette from "./CommandPalette";
 import Composer, { type ComposerHandle } from "./Composer";
 import DocumentDrawer, { type DrawerTarget } from "./DocumentDrawer";
 import { AssistantMessage, UserBubble } from "./Message";
+import Sidebar from "./Sidebar";
 import TracePanel from "./TracePanel";
 
 export default function Workspace({ session, onSignOut }: { session: Session; onSignOut: () => void }) {
@@ -54,6 +55,9 @@ export default function Workspace({ session, onSignOut }: { session: Session; on
   }, [messages]);
 
   const ask = useCallback((t: string) => send(t), [send]);
+  const userTexts = useMemo(() => messages.flatMap((m) => (m.role === "user" ? [m.content] : [])), [messages]);
+  const asked = useMemo(() => new Set(userTexts), [userTexts]);
+  const lastAsked = userTexts.length ? userTexts[userTexts.length - 1] : null;
   const openCitation = useCallback((c: Citation) => setDrawer({ documentId: c.document_id, section: c.section_number }), []);
   const selected = useMemo(() => {
     const a = messages.filter((m) => m.role === "assistant");
@@ -100,37 +104,7 @@ export default function Workspace({ session, onSignOut }: { session: Session; on
       </header>
 
       <div className="flex min-h-0 flex-1">
-        {/* sidebar */}
-        <aside className="hidden w-[272px] shrink-0 flex-col overflow-y-auto border-r border-rule lg:flex">
-          {PROMPT_GROUPS.map((g, gi) => (
-            <div key={g.id} className="border-b border-rule py-3">
-              <div className="label flex items-center gap-2 px-5 pb-1.5">
-                <span className="text-faint">{String(gi + 1).padStart(2, "0")}</span>
-                <span className={g.id === "red" ? "text-stop" : ""}>{g.title}</span>
-              </div>
-              {g.items.map((it) => (
-                <button
-                  key={it.text}
-                  onClick={() => ask(it.text)}
-                  disabled={busy}
-                  className="group flex w-full items-center gap-2 px-5 py-[7px] text-left text-[13.5px] text-paper-2 transition hover:bg-ink-2 hover:text-paper disabled:opacity-40"
-                >
-                  <span className="min-w-0 flex-1 truncate">{it.label}</span>
-                  {it.tag && <span className="font-mono text-[10px] text-faint group-hover:text-accent">{it.tag}</span>}
-                </button>
-              ))}
-            </div>
-          ))}
-          <div className="py-3">
-            <div className="label px-5 pb-1.5">Knowledge base</div>
-            {docs.map((d) => (
-              <button key={d.document_id} onClick={() => setDrawer({ documentId: d.document_id })} className="flex w-full items-baseline gap-3 px-5 py-[7px] text-left transition hover:bg-ink-2">
-                <span className="w-[86px] shrink-0 font-mono text-[10.5px] text-mute">{d.document_id}</span>
-                <span className="truncate text-[13px] text-paper-2">{d.title}</span>
-              </button>
-            ))}
-          </div>
-        </aside>
+        <Sidebar docs={docs} busy={busy} asked={asked} lastAsked={lastAsked} onAsk={ask} onOpenDoc={(id) => setDrawer({ documentId: id })} />
 
         {/* chat */}
         <main className="relative flex min-w-0 flex-1 flex-col">
