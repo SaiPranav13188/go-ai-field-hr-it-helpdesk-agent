@@ -16,9 +16,11 @@ export default function Home() {
   const ready = raw !== SSR;
   const session = useMemo(() => (raw === SSR ? null : sessionStore.parse(raw)), [raw]);
   const [picker, setPicker] = useState(false);
+  const [home, setHome] = useState(false); // signed-in users can still visit the landing page
 
   const onSession = (s: Session) => {
     setPicker(false);
+    setHome(false);
     window.scrollTo({ top: 0 });
     sessionStore.set(s);
   };
@@ -31,13 +33,13 @@ export default function Home() {
     <MotionConfig reducedMotion="user">
       {ready && (
         <AnimatePresence mode="wait">
-          {session ? (
+          {session && !home ? (
             <motion.div key="ws" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: EASE }}>
-              <Workspace session={session} onSignOut={signOut} />
+              <Workspace session={session} onSignOut={signOut} onHome={() => { setHome(true); window.scrollTo({ top: 0 }); }} />
             </motion.div>
           ) : (
             <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: EASE }}>
-              <Landing onLaunch={() => setPicker(true)} />
+              <Landing onLaunch={() => (session ? setHome(false) : setPicker(true))} />
             </motion.div>
           )}
         </AnimatePresence>

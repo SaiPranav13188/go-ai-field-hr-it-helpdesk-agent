@@ -17,7 +17,7 @@ import { AssistantMessage, UserBubble } from "./Message";
 import Sidebar from "./Sidebar";
 import TracePanel from "./TracePanel";
 
-export default function Workspace({ session, onSignOut }: { session: Session; onSignOut: () => void }) {
+export default function Workspace({ session, onSignOut, onHome }: { session: Session; onSignOut: () => void; onHome: () => void }) {
   const router = useRouter();
   const { messages, busy, send, stop, reset, selectedId, setSelectedId } = useChat(session.token, onSignOut);
   const [palette, setPalette] = useState(false);
@@ -71,7 +71,9 @@ export default function Workspace({ session, onSignOut }: { session: Session; on
     <div className="flex h-[100svh] flex-col bg-ink">
       {/* header */}
       <header className="relative z-30 flex items-center gap-4 border-b border-rule bg-ink px-4 py-3 sm:px-5">
-        <Logo />
+        <button onClick={onHome} className="transition-opacity hover:opacity-80" aria-label="Go to the home page" title="Home">
+          <Logo />
+        </button>
         <span className="label hidden border-l border-rule pl-4 md:inline">Prototype · fictional sample policies</span>
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
           {health && (

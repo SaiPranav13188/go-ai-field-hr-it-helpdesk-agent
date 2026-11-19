@@ -94,7 +94,7 @@ export default function ArchitecturePage() {
               <Link href="/" className="flex items-center gap-2 text-[13.5px] text-paper-2 transition hover:text-paper">
                 <ArrowLeft className="h-4 w-4" /> Back
               </Link>
-              <Logo />
+              <Link href="/" aria-label="Go to the home page" className="transition-opacity hover:opacity-80"><Logo /></Link>
             </div>
             <div className="mt-auto pb-12">
               <span className="label text-paper-2">Architecture &amp; evaluation</span>
