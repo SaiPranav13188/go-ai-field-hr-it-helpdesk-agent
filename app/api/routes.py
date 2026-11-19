@@ -82,10 +82,11 @@ class ChatRequest(BaseModel):
 @router.get("/health")
 async def health(request: Request):
     svc = request.app.state.services
+    await svc.ensure_index()
     return {
         "status": "ok" if svc.ready else "starting",
         "components": {
-            "vector_store": {"ok": svc.chunks_loaded > 0, "chunks": svc.chunks_loaded, "backend": "qdrant-cloud" if get_settings().qdrant_url else "qdrant-local"},
+            "vector_store": {"ok": svc.chunks_loaded > 0, "chunks": svc.chunks_loaded, "backend": "qdrant-cloud" if get_settings().qdrant_url else "qdrant-local", "error": svc.vector_store_error},
             "models": {"backend": svc.model_backend, "embedding": get_settings().bge_m3_model, "reranker": get_settings().bge_reranker_model, "warm": svc.models_warm},
             "mcp": {"connected": svc.mcp.connected, "tools": svc.mcp_tools},
             "generation": {"configured": svc.llm is not None, "model": get_settings().generation_model},
@@ -147,7 +148,7 @@ async def chat(body: ChatRequest, request: Request, principal: Principal = Depen
     svc = request.app.state.services
     if not _limiter.check(f"{principal.subject_id}:{client_ip(request)}"):
         raise HTTPException(status_code=429, detail="Too many requests — please wait a moment.")
-    if not svc.ready:
+    if not await svc.ensure_index():
         raise HTTPException(status_code=503, detail="The assistant is still starting up. Try again in a few seconds.")
 
     request_id = uuid.uuid4().hex[:12]

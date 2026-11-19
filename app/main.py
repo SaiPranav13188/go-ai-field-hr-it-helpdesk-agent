@@ -37,11 +37,24 @@ class Services:
     graph: object
     model_backend: str
     chunks_loaded: int = 0
+    vector_store_error: str | None = None
     models_warm: bool = False
     mcp_tools: list[str] = field(default_factory=list)
 
     @property
     def ready(self) -> bool:
+        return self.chunks_loaded > 0
+
+    async def ensure_index(self) -> bool:
+        """Load chunk payloads from Qdrant; retried lazily if the startup attempt failed."""
+        if self.chunks_loaded:
+            return True
+        try:
+            self.chunks_loaded = await self.retriever.load()
+            self.vector_store_error = None if self.chunks_loaded else "collection empty"
+        except Exception as exc:
+            self.vector_store_error = f"{type(exc).__name__}: {str(exc)[:120]}"
+            log.error("vector_store_unavailable", extra={"error": type(exc).__name__})
         return self.chunks_loaded > 0
 
 
@@ -75,10 +88,7 @@ async def lifespan(app: FastAPI):
     setup_logging(settings.log_level)
     svc = build_services(settings)
     app.state.services = svc
-    try:
-        svc.chunks_loaded = await svc.retriever.load()
-    except Exception as exc:
-        log.error("vector_store_unavailable", extra={"error": type(exc).__name__})
+    await svc.ensure_index()
     await svc.mcp.start()
     try:
         svc.mcp_tools = await svc.mcp.list_tools()
