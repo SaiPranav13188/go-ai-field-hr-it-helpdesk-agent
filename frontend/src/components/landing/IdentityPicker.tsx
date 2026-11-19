@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { FlaskConical, Loader2, ShieldHalf, X } from "lucide-react";
-import { Avatar, EASE, SpotlightCard, cn } from "@/components/fx/primitives";
+import { ArrowRight, Loader2, X } from "lucide-react";
+import { Avatar, EASE, cn } from "@/components/fx/primitives";
 import { api } from "@/lib/api";
 import type { Identity, Session } from "@/lib/types";
 
@@ -35,7 +35,7 @@ export default function IdentityPicker({ open, onClose, onSession }: { open: boo
     try {
       onSession(await api.login(id));
     } catch (e) {
-      setError(e instanceof Error ? `Couldn’t start the session: ${e.message}. Is the API running?` : "Couldn’t start the session.");
+      setError(e instanceof Error ? `Couldn’t start the session: ${e.message}. The service may be waking up; try again in a few seconds.` : "Couldn’t start the session.");
       setBusy(null);
     }
   };
@@ -43,69 +43,69 @@ export default function IdentityPicker({ open, onClose, onSession }: { open: boo
   return (
     <AnimatePresence>
       {open && (
-        <motion.div className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <motion.div className="absolute inset-0 bg-ink-950/70 backdrop-blur-md" onClick={onClose} />
+        <motion.div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div className="absolute inset-0 bg-ink/85 backdrop-blur-[2px]" onClick={onClose} />
           <motion.div
             role="dialog"
             aria-modal
             aria-label="Choose a simulated employee session"
-            initial={{ opacity: 0, y: 40, scale: 0.96, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: 30, scale: 0.97, filter: "blur(6px)" }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="relative max-h-[92svh] w-full max-w-3xl overflow-y-auto rounded-3xl p-5 glass-strong sm:p-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.55, ease: EASE }}
+            className="relative max-h-[92svh] w-full max-w-3xl overflow-y-auto border border-rule-strong bg-ink-2"
           >
-            <button onClick={onClose} className="absolute right-4 top-4 rounded-lg p-2 text-fg-subtle transition hover:bg-white/5 hover:text-fg" aria-label="Close">
-              <X className="h-4 w-4" />
-            </button>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/10 px-3 py-1 text-xs font-medium text-amber">
-              <FlaskConical className="h-3.5 w-3.5" /> Simulated employee session
+            <div className="flex items-start justify-between border-b border-rule px-6 py-5 sm:px-8">
+              <div>
+                <span className="label text-accent">Simulated employee session</span>
+                <h2 className="mt-3 text-[28px] font-semibold tracking-[-0.03em] sm:text-[34px]">Sign in as a test employee.</h2>
+                <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-mute">
+                  There is no real login in this demo. The server issues a signed session for whoever you pick, and that session decides whose leave balance can be read. What you type in the chat never does.
+                </p>
+              </div>
+              <button onClick={onClose} className="-mr-2 p-2 text-mute transition hover:text-paper" aria-label="Close">
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">Who are you today?</h2>
-            <p className="mt-2 max-w-xl text-sm text-fg-muted">
-              This demo has no real login. Pick a synthetic employee: the server issues a signed session for them, and that session (never the chat text) decides whose leave balance the agent can read.
-            </p>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            <div>
               {ids.map((p, i) => (
-                <motion.div key={p.subject_id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.05, duration: 0.6, ease: EASE }}>
-                  <SpotlightCard
-                    as="button"
-                    tilt
-                    onClick={() => !busy && choose(p.subject_id)}
-                    glow={p.role === "hr_admin" ? "rgba(255,190,92,0.18)" : "rgba(139,123,255,0.18)"}
-                    className={cn("w-full p-4 text-left transition-colors", busy && busy !== p.subject_id && "opacity-50", p.subject_id === "E102" && "border-violet/30")}
-                  >
-                    <div className="relative flex items-center gap-3.5">
-                      <Avatar name={p.display_name} id={p.subject_id} size={44} />
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="truncate font-medium text-white">{p.display_name}</span>
-                          {p.role === "hr_admin" && (
-                            <span className="inline-flex items-center gap-1 rounded-md border border-amber/30 bg-amber/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber">
-                              <ShieldHalf className="h-3 w-3" /> HR role
-                            </span>
-                          )}
-                          {p.subject_id === "E102" && <span className="rounded-md bg-violet/15 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-violet">Test case</span>}
-                        </div>
-                        <div className="mt-0.5 truncate text-xs text-fg-muted">
-                          <span className="font-mono">{p.subject_id}</span> · {p.department}
-                        </div>
-                      </div>
-                      {busy === p.subject_id && <Loader2 className="h-4 w-4 animate-spin text-violet" />}
-                    </div>
-                  </SpotlightCard>
-                </motion.div>
+                <motion.button
+                  key={p.subject_id}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.04, duration: 0.5, ease: EASE }}
+                  onClick={() => !busy && choose(p.subject_id)}
+                  className={cn(
+                    "group grid w-full grid-cols-[2.5rem_1fr_auto] items-center gap-4 border-b border-rule px-6 py-4 text-left transition-colors hover:bg-ink-3 sm:grid-cols-[3rem_2.5rem_1fr_12rem_auto] sm:px-8",
+                    busy && busy !== p.subject_id && "opacity-40",
+                  )}
+                >
+                  <span className="hidden font-mono text-[11px] text-faint sm:block">{p.subject_id}</span>
+                  <Avatar name={p.display_name} size={36} className={p.role === "hr_admin" ? "border-accent/50 text-accent" : ""} />
+                  <span>
+                    <span className="block text-[16px] font-medium text-paper">
+                      {p.display_name}
+                      {p.subject_id === "E102" && <span className="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-accent">assignment test case</span>}
+                    </span>
+                    <span className="block text-[13px] text-mute sm:hidden">{p.subject_id} · {p.department}</span>
+                  </span>
+                  <span className="hidden text-[13.5px] text-mute sm:block">
+                    {p.department}
+                    {p.role === "hr_admin" && <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-accent">HR role</span>}
+                  </span>
+                  {busy === p.subject_id ? <Loader2 className="h-4 w-4 animate-spin text-accent" /> : <ArrowRight className="h-4 w-4 text-faint transition group-hover:translate-x-1 group-hover:text-paper" />}
+                </motion.button>
               ))}
             </div>
             <AnimatePresence>
               {error && (
-                <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mt-4 rounded-xl border border-rose/30 bg-rose/10 px-4 py-3 text-sm text-rose">
+                <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="border-b border-rule px-6 py-4 text-[14px] text-stop sm:px-8">
                   {error}
                 </motion.p>
               )}
             </AnimatePresence>
-            <p className="mt-6 text-xs text-fg-subtle">All names, IDs and balances are synthetic test data.</p>
+            <p className="label px-6 py-4 text-faint sm:px-8">All names, IDs and balances are synthetic test data.</p>
           </motion.div>
         </motion.div>
       )}

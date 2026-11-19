@@ -47,18 +47,18 @@ function Palette({ onClose, onAsk, onClear, onSwitch, onArchitecture }: Props) {
     <>
       {(
         <motion.div className="fixed inset-0 z-[60] flex items-start justify-center px-3 pt-[12vh]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <motion.div className="absolute inset-0 bg-ink-950/60 backdrop-blur-sm" onClick={onClose} />
+          <motion.div className="absolute inset-0 bg-ink/80" onClick={onClose} />
           <motion.div
             initial={{ opacity: 0, y: -16, scale: 0.97, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="relative w-full max-w-xl overflow-hidden rounded-2xl glass-strong"
+            className="relative w-full max-w-xl overflow-hidden border border-rule-strong bg-ink-2"
             role="dialog"
             aria-label="Command palette"
           >
-            <div className="flex items-center gap-3 border-b border-white/[0.07] px-4">
-              <Search className="h-4 w-4 text-fg-subtle" />
+            <div className="flex items-center gap-3 border-b border-rule px-4">
+              <Search className="h-4 w-4 text-faint" />
               <input
                 ref={inputRef}
                 value={q}
@@ -73,9 +73,9 @@ function Palette({ onClose, onAsk, onClear, onSwitch, onArchitecture }: Props) {
                   else if (e.key === "Escape") onClose();
                 }}
                 placeholder="Ask anything, or search test prompts…"
-                className="h-14 flex-1 bg-transparent text-[15px] text-white outline-none placeholder:text-fg-subtle"
+                className="h-14 flex-1 bg-transparent text-[15px] text-paper outline-none placeholder:text-faint"
               />
-              <kbd className="rounded-md border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-fg-subtle">esc</kbd>
+              <kbd className=" border border-rule px-1.5 py-0.5 font-mono text-[10px] text-faint">esc</kbd>
             </div>
             <div className="max-h-[52vh] overflow-y-auto p-2">
               {items.map((it, i) => (
@@ -83,17 +83,17 @@ function Palette({ onClose, onAsk, onClear, onSwitch, onArchitecture }: Props) {
                   key={it.id}
                   onMouseEnter={() => setActive(i)}
                   onClick={() => run(it)}
-                  className={cn("relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left", i === active ? "text-white" : "text-fg-muted")}
+                  className={cn("relative flex w-full items-center gap-3 px-3 py-2.5 text-left", i === active ? "text-paper" : "text-mute")}
                 >
-                  {i === active && <motion.span layoutId="cmd-active" className="absolute inset-0 rounded-xl bg-white/[0.07]" transition={{ type: "spring", stiffness: 500, damping: 35 }} />}
-                  <span className="relative grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.03]">
-                    {it.icon ? <it.icon className="h-3.5 w-3.5" /> : <span className={cn("h-1.5 w-1.5 rounded-full bg-current", it.tone)} />}
+                  {i === active && <motion.span layoutId="cmd-active" className="absolute inset-0 border-l-2 border-accent bg-ink-3" transition={{ type: "spring", stiffness: 500, damping: 35 }} />}
+                  <span className="relative grid h-7 w-7 shrink-0 place-items-center border border-rule bg-ink-3">
+                    {it.icon ? <it.icon className="h-3.5 w-3.5" /> : <span className={cn("h-1.5 w-1.5 bg-current", it.tone)} />}
                   </span>
                   <span className="relative min-w-0 flex-1">
                     <span className="block truncate text-[13.5px]">{it.label}</span>
-                    <span className="block text-[11px] text-fg-subtle">{it.sub}</span>
+                    <span className="block text-[11px] text-faint">{it.sub}</span>
                   </span>
-                  {it.tag && <span className="relative rounded-md border border-white/10 px-1.5 font-mono text-[10px] text-fg-subtle">{it.tag}</span>}
+                  {it.tag && <span className="relative border border-rule px-1.5 font-mono text-[10px] text-faint">{it.tag}</span>}
                 </button>
               ))}
             </div>

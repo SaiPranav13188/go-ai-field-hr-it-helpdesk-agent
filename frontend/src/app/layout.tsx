@@ -1,26 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const instrument = Instrument_Serif({ variable: "--font-instrument-serif", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
+const schibsted = Schibsted_Grotesk({ variable: "--font-schibsted", subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
   title: "Go AI Field | HR & IT Helpdesk",
   description:
-    "A secure HR & IT helpdesk agent — hybrid RAG (BGE-M3 + BM25 + RRF + BGE reranker), MCP-gated PostgreSQL, LangGraph guardrails. Prototype using fictional sample policies.",
+    "A secure HR & IT helpdesk agent — cited policy answers, your own leave balance through a permission-checked MCP tool, and guardrails. Prototype using fictional sample policies.",
 };
 
-export const viewport: Viewport = {
-  themeColor: "#04050a",
-  colorScheme: "dark",
-};
+export const viewport: Viewport = { themeColor: "#0a0a0b", colorScheme: "dark" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}>
-      <body className="min-h-full bg-ink-950 text-fg">{children}</body>
+    <html lang="en" className={`${schibsted.variable} ${plexMono.variable} h-full antialiased`}>
+      <body className="min-h-full bg-ink text-paper">{children}</body>
     </html>
   );
 }
